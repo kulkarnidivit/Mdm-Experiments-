@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Weather App</title>
+    <style>
+      body {
+        font-family: Arial;
+        background: #eef2f3;
+        text-align: center;
+      }
+      .box {
+        background: white;
+        padding: 20px;
+        width: 300px;
+        margin: auto;
+        box-shadow: 0 0 10px gray;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h2>Weather Application</h2>
+      <input type="text" id="city" placeholder="Enter city name" />
+      <br /><br />
+      <button onclick="getWeather()">Get Weather</button>
+      <p id="result"></p>
+    </div>
+
+    <script>
+      function getWeather() {
+        var city = document.getElementById("city").value;
+        var apiKey = "a79ae812d6fabf42c69e4075661198ee";
+        var url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=" + apiKey;
+
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("result").innerHTML ="Temperature: " +data.main.temp +" °C<br>" +"Humidity: " +data.main.humidity +"%<br>" +"Condition: " +data.weather[0].description;
+          })
+          .catch(() => {
+            document.getElementById("result").innerHTML = "City not found!";
+          });
+      }
+    </script>
+  </body>
+</html>
